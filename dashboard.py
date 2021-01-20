@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import machine_learning_functions as milf
 import predictors as pred
+import charts as charts
 
 # Managing Names and Functions
 function_acronyms = milf.get_function_names()
@@ -40,6 +41,8 @@ show_dataset = st.button('Click here to see the dataset')
 if show_dataset:
     st.subheader("Iris Dataset")
     st.write(milf.show_data())
+    st.pyplot(charts.get_trends())
+
     if st.button('Close Dataset Window'):
         show_dataset = not show_dataset
 
