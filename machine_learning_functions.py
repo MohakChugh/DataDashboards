@@ -33,7 +33,7 @@ def knn():
     classifier = KNeighborsClassifier(n_neighbors=n_neighbors, p=2, metric='euclidean')
     classifier.fit(x_train, y_train)
     y_pred = classifier.predict(x_test)
-    return accuracy_score(y_test, y_pred)
+    return classification_report(y_test, y_pred)
 
 def logistic_regression():
     x = iris.iloc[:, 0:4]
@@ -46,7 +46,7 @@ def logistic_regression():
     model = model.fit(x_train, y_train)
 
     y_pred = model.predict(x_test)
-    return accuracy_score(y_test, y_pred)
+    return classification_report(y_test, y_pred)
 
 
 def decision_tree_classifier():
@@ -56,7 +56,7 @@ def decision_tree_classifier():
     Decision_Tree_Entropy = DecisionTreeClassifier(criterion="entropy", random_state=100)
     Decision_Tree_Entropy.fit(x_train, y_train)
     y_pred = Decision_Tree_Entropy.predict(x_test)
-    return accuracy_score(y_test, y_pred)
+    return classification_report(y_test, y_pred)
 
 
 def random_forest():
@@ -68,7 +68,7 @@ def random_forest():
     clf.fit(x_train, y_train)
 
     y_pred = clf.predict(x_test)
-    return accuracy_score(y_test, y_pred)
+    return classification_report(y_test, y_pred)
 
 
 def support_vector_machines():
@@ -79,7 +79,67 @@ def support_vector_machines():
     classifier = svm.SVC(kernel='linear', random_state=100)
     classifier.fit(x_train, y_train)
     y_pred = classifier.predict(x_test)
-    return accuracy_score(y_test, y_pred)
+    return classification_report(y_test, y_pred)
+
+def knn_pred():
+    x = iris.iloc[:, 0:4]
+    y = iris.iloc[:, 4]
+    x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.25)
+    sc_x = StandardScaler()
+    x_train = sc_x.fit_transform(x_train)
+    x_test = sc_x.transform(x_test)
+
+    n_neighbors = int(math.sqrt(len(y)))
+    classifier = KNeighborsClassifier(n_neighbors=n_neighbors, p=2, metric='euclidean')
+    classifier.fit(x_train, y_train)
+    y_pred = classifier.predict(x_test)
+    return classification_report(y_test, y_pred)
+
+def logistic_regression_pred():
+    x = iris.iloc[:, 0:4]
+    y = iris.iloc[:, 4]
+    x = np.array(x)
+    y = np.array(y)
+
+    model = LogisticRegression(solver='liblinear', random_state=0)
+    x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.25)
+    model = model.fit(x_train, y_train)
+
+    y_pred = model.predict(x_test)
+    return classification_report(y_test, y_pred)
+
+
+def decision_tree_classifier_pred():
+    x = iris.iloc[:, :4]
+    y = iris.iloc[:, 4]
+    x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.25)
+    Decision_Tree_Entropy = DecisionTreeClassifier(criterion="entropy", random_state=100)
+    Decision_Tree_Entropy.fit(x_train, y_train)
+    y_pred = Decision_Tree_Entropy.predict(x_test)
+    return classification_report(y_test, y_pred)
+
+
+def random_forest_pred():
+    x = iris.iloc[:, :4]
+    y = iris.iloc[:, 4]
+
+    x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.25)
+    clf = rfc(n_jobs=2)
+    clf.fit(x_train, y_train)
+
+    y_pred = clf.predict(x_test)
+    return classification_report(y_test, y_pred)
+
+
+def support_vector_machines_pred():
+    x = iris.iloc[:, :4]
+    y = iris.iloc[:, 4]
+
+    x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.25)
+    classifier = svm.SVC(kernel='linear', random_state=100)
+    classifier.fit(x_train, y_train)
+    y_pred = classifier.predict(x_test)
+    return classification_report(y_test, y_pred)
 
 
 def get_function_names():
