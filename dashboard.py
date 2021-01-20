@@ -52,14 +52,18 @@ select_classifier = st.sidebar.selectbox(
 get_predictions = st.sidebar.checkbox('Get Predictions for this Classifier')
 
 if get_predictions:
-    petallength = st.sidebar.slider('Petal Length', 1.0, 6.9)
-    petalwidth = st.sidebar.slider('Petal width', 0.1, 2.5)
     sepallength = st.sidebar.slider('Sepal Length', 4.3, 7.9)
     sepalWidth = st.sidebar.slider('Sepal Width', 2.0, 4.4)
+    petallength = st.sidebar.slider('Petal Length', 1.0, 6.9)
+    petalwidth = st.sidebar.slider('Petal width', 0.1, 2.5)    
     
+    st.write('The Current Values for the Prediction is: ')
+
     input_array = [sepallength, sepalWidth, petallength, petalwidth]
     input_array = np.array(input_array)
     input_array = input_array.reshape(1, -1)
+
+    st.write(input_array)
 
     prediction_function = pred.get_prediction_function(pred.get_function_acronym(select_classifier))
     prediction = prediction_function(input_array)
@@ -72,5 +76,4 @@ if selected_function and not get_predictions:
     st.write(f'Currently selected Algorithm is ***{select_classifier}***')
     st.write(f'The Current Accuracy Score for the Algorithm is: {selected_function()*100}%')
     st.write()
-
 
